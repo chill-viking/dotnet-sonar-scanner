@@ -1,5 +1,9 @@
 name: 'Analyze DotNet Project'
-description: 'Use SonarScanner to analyze .NET project'
+author: 'Peter Jokumsen'
+description: 'Use SonarScanner to analyze .NET project and publish to a sonarcloud project.'
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
 inputs:
   sonar-project-key:
     description: 'Key for Sonar project'
