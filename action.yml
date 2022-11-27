@@ -46,7 +46,7 @@ runs:
     - uses: actions/cache@v3
       name: Cache SonarCloud packages
       with:
-        path: ~\.sonar\cache
+        path: ~/.sonar/cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
 
@@ -54,7 +54,7 @@ runs:
       name: Cache SonarCloud scanner
       id: cache-sonar-scanner
       with:
-        path: ${{ inputs.working-directory }}\.sonar\scanner
+        path: ${{ inputs.working-directory }}/.sonar/scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
 
@@ -62,8 +62,8 @@ runs:
       name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: |
-        New-Item -Path ${{ inputs.working-directory }}\.sonar\scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path ${{ inputs.working-directory }}\.sonar\scanner
+        New-Item -Path ${{ inputs.working-directory }}/.sonar/scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path ${{ inputs.working-directory }}/.sonar/scanner
 
     - shell: pwsh
       name: Build and analyze
@@ -74,7 +74,7 @@ runs:
       run: |
         dotnet tool update --global dotnet-coverage
 
-        .\.sonar\scanner\dotnet-sonarscanner begin `
+        ./.sonar/scanner/dotnet-sonarscanner begin `
             /k:"${{ inputs.sonar-project-key }}" `
             /o:"${{ inputs.sonar-org-key }}" `
             /d:sonar.login="${{ inputs.SONAR_TOKEN }}" `
@@ -85,5 +85,5 @@ runs:
         dotnet build
         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-        .\.sonar\scanner\dotnet-sonarscanner end `
+        ./.sonar/scanner/dotnet-sonarscanner end `
             /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
