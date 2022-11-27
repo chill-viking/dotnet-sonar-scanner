@@ -15,7 +15,7 @@ inputs:
   working-directory:
     description: 'Directory to execute `dotnet build` in'
     required: false
-    default: './'
+    default: '.'
   dotnet-version:
     description: '.NET SDK to be used'
     required: false
@@ -73,7 +73,7 @@ runs:
       run: |
         dotnet tool update --global dotnet-coverage
 
-        .\.sonar\scanner\dotnet-sonarscanner begin `
+        ${{ inputs.working-directory }}\.sonar\scanner\dotnet-sonarscanner begin `
             /k:"${{ inputs.sonar-project-key }}" `
             /o:"${{ inputs.sonar-org-key }}" `
             /d:sonar.login="${{ inputs.SONAR_TOKEN }}" `
@@ -84,5 +84,5 @@ runs:
         dotnet build
         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-        .\.sonar\scanner\dotnet-sonarscanner end `
+        ${{ inputs.working-directory }}\.sonar\scanner\dotnet-sonarscanner end `
             /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
