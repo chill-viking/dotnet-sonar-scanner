@@ -58,22 +58,23 @@ runs:
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
 
-    - shell: powershell
+    - shell: pwsh
       name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: |
         New-Item -Path ${{ inputs.working-directory }}\.sonar\scanner -ItemType Directory
         dotnet tool update dotnet-sonarscanner --tool-path ${{ inputs.working-directory }}\.sonar\scanner
 
-    - shell: powershell
+    - shell: pwsh
       name: Build and analyze
+      working-directory: ${{ inputs.working-directory }}
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
       run: |
         dotnet tool update --global dotnet-coverage
 
-        ${{ inputs.working-directory }}\.sonar\scanner\dotnet-sonarscanner begin `
+        .\.sonar\scanner\dotnet-sonarscanner begin `
             /k:"${{ inputs.sonar-project-key }}" `
             /o:"${{ inputs.sonar-org-key }}" `
             /d:sonar.login="${{ inputs.SONAR_TOKEN }}" `
@@ -84,5 +85,5 @@ runs:
         dotnet build
         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-        ${{ inputs.working-directory }}\.sonar\scanner\dotnet-sonarscanner end `
+        .\.sonar\scanner\dotnet-sonarscanner end `
             /d:sonar.login="${{ inputs.SONAR_TOKEN }}"
