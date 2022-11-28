@@ -1,4 +1,4 @@
-name: 'Analyze DotNet Project'
+name: dotnet-sonar-scanner
 author: 'Peter Jokumsen'
 description: 'Use SonarScanner to analyze .NET project and publish to a sonarcloud project.'
 branding:
