@@ -5,7 +5,7 @@
 
 GitHub Action to scan a dotnet project using sonar scanner.
 
-This action will checkout your code and execute `dotnet build` and `dotnet test` in the root directory.
+This action will check out your code and execute `dotnet build` and `dotnet test` in the root directory.
 This directory used can be changed by specifying the [input](#inputs) `working-directory`.
 The directory used should have a single solution `.sln` file containing the projects being tested and optionally test projects to run against the projects.
 
@@ -13,15 +13,7 @@ The directory used should have a single solution `.sln` file containing the proj
 
 - .NET 6
 
-> Other frameworks have not yet been tested/needed
-
-## Tags to use
-
-Latest version: v<!-- x-release-please-version -->
-
-Minor: v<!-- x-release-please-major -->.<!-- x-release-please-minor -->
-
-Major: v<!-- x-release-please-major -->
+> If you require a framework that is not listed and it does not current work, please log an issue.
 
 ## Usage
 
@@ -43,8 +35,8 @@ jobs:
         with:
           sonar-project-key: '{sonar-project-key}'
           sonar-org-key: '{sonar-org-key}'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
 ```
 
 With the above example, you will need to perform these steps:
@@ -78,12 +70,12 @@ jobs:
         with:
           sonar-project-key: '{sonar-project-key}'
           sonar-org-key: '{sonar-org-key}'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
           working-directory: './src/dotnet-api'
 ```
 
-Follow the same steps as mentioned in [basic workflow](#example-basic-workflow) and your workflow should be good to test analyze your project in `/src/dotnet-api`
+Follow the same steps as mentioned in [basic workflow](#example-basic-workflow-) and your workflow should be good to test analyze your project in `/src/dotnet-api`
 
 You can review an example repo using this kind of workflow [here](https://github.com/chill-viking/github-actions-tests)
 
@@ -93,8 +85,8 @@ You can review an example repo using this kind of workflow [here](https://github
 |:--------------------|:--------:|:-------------------------------------------------------------------------------------|
 | `sonar-project-key` |   Yes    | SonarCloud project key                                                               |
 | `sonar-org-key`     |   Yes    | SonarCloud organization key                                                          |
-| `GITHUB_TOKEN`      |   Yes    | GitHub token                                                                         |
-| `SONAR_TOKEN`       |   Yes    | SonarCloud authentication token                                                      |
+| `token`             |   Yes    | GitHub token for the current workflow                                                |
+| `sonar-token`       |   Yes    | SonarCloud authentication token                                                      |
 | `working-directory` |    No    | Specify location of primary solution to build and test in repo<br/>**default:** `./` |
 | `dotnet-version`    |    No    | .NET SDK version to be used<br/>**default:** `6.0.x`                                 |
 | `project-version`   |    No    | Version of project being scanned, will be set in analysis<br/>**default:** `''`      |
