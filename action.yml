@@ -11,10 +11,10 @@ inputs:
   sonar-org-key:
     description: 'Key for Sonar organisation'
     required: true
-  GITHUB_TOKEN:
+  token:
     description: 'GitHub token'
     required: true
-  SONAR_TOKEN:
+  sonar-token:
     description: 'Sonar token to use for authenticating with Sonar'
   working-directory:
     description: 'Directory to execute `dotnet build` in'
