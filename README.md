@@ -15,6 +15,14 @@ The directory used should have a single solution `.sln` file containing the proj
 
 > Other frameworks have not yet been tested/needed
 
+## Tags to use
+
+Latest version: v<!-- x-release-please-version -->
+
+Minor: v<!-- x-release-please-major -->.<!-- x-release-please-minor -->
+
+Major: v<!-- x-release-please-major -->
+
 ## Usage
 
 To use this GitHub Action, you will need to have a [SonarCloud](https://sonarcloud.io) organisation and project in
