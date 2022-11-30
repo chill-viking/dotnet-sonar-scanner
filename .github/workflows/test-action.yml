@@ -36,7 +36,7 @@ jobs:
           sonar-project-key: 'chill-viking-org_github-actions-tests-dotnet-sonar-scanner'
           sonar-org-key: 'chill-viking-org'
           token: ${{ secrets.GITHUB_TOKEN }}
-          sonar-token: ${{ secrets.SONAR_TOKEN_DOTNET }}
+          sonar-token: ${{ secrets.ORG_SONAR_TOKEN }}
           project-version: '1.0.0-beta'
           working-directory: './test-repo/dotnet-sonar-scanner'
           checkout: false
