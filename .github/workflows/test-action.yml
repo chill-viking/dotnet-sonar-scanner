@@ -15,12 +15,15 @@ jobs:
     name: use chill-viking/dotnet-sonar-scanner
     steps:
       - uses: actions/checkout@v3
+        name: Checkout this repo to access action
+
+      - uses: actions/checkout@v3
         name: Checkout chill-viking/github-actions-tests
         with:
           name: chill-viking/github-actions-tests
           ref: refs/head/release
 
-      - uses: ../../
+      - uses: ./../../
         name: use composite action
         with:
           sonar-project-key: 'chill-viking-org_github-actions-tests-dotnet-sonar-scanner'
