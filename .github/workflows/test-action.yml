@@ -26,6 +26,10 @@ jobs:
           repository: chill-viking/github-actions-tests
           path: './test-repo'
 
+      - shell: pwsh
+        name: list all files
+        run: Get-ChildItem -Path . -Name -Recurse
+
       - uses: ./action-repo
         name: use composite action
         with:
