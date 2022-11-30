@@ -10,7 +10,7 @@ jobs:
   test-dotnet-sonar-scanner:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     name: use chill-viking/dotnet-sonar-scanner
@@ -19,7 +19,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            var artifacts = await github.actions.listWorkflowRunArtifacts({
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{github.event.workflow_run.id }},
@@ -27,15 +27,15 @@ jobs:
             var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == "pr"
             })[0];
-            var download = await github.actions.downloadArtifact({
+            var download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: matchArtifact.id,
                archive_format: 'zip',
             });
             var fs = require('fs');
-            var path = '${{github.workspace}}'.replace(/\\/, '/');
-            fs.writeFileSync(path + '/pr.zip', Buffer.from(download.data));
+            fs.writeFileSync('./pr.zip', Buffer.from(download.data));
+
       - run: unzip pr.zip
 
       - name: 'Get PR Number'
@@ -76,7 +76,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.issues.createComment({
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ steps.set-pr.outputs.result }},
