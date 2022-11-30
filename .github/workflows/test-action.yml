@@ -1,0 +1,76 @@
+name: Test dotnet-sonar-scanner
+
+on:
+  workflow_run:
+    workflows: ["Receive PR"]
+    types:
+      - completed
+
+jobs:
+  test-dotnet-sonar-scanner:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    name: use chill-viking/dotnet-sonar-scanner
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout this repo to access action
+        with:
+          path: './action-repo'
+
+      - uses: actions/checkout@v3
+        name: Checkout chill-viking/github-actions-tests
+        with:
+          repository: chill-viking/github-actions-tests
+          path: './test-repo'
+
+      - uses: ./action-repo
+        name: use composite action
+        with:
+          sonar-project-key: 'chill-viking-org_github-actions-tests-dotnet-sonar-scanner'
+          sonar-org-key: 'chill-viking-org'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.ORG_SONAR_TOKEN }}
+          project-version: '1.0.0-beta'
+          working-directory: './test-repo/dotnet-sonar-scanner'
+          checkout: false
+
+      - name: 'Download PR from trigger workflow'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: unzip pr.zip
+
+      - name: 'Comment on PR'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            var fs = require('fs');
+            var issue_number = Number(fs.readFileSync('./NR'));
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: 'Did this work?'
+            });
+
+          #    body: 'Testing action for ${{ matrix.os }} was successful!'
