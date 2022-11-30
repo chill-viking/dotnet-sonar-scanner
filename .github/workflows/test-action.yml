@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         name: Checkout this repo to access action
+        with:
+          path: './action-repo'
 
       - uses: actions/checkout@v3
         name: Checkout chill-viking/github-actions-tests
@@ -23,7 +25,7 @@ jobs:
           name: chill-viking/github-actions-tests
           path: './test-repo'
 
-      - uses: ./../../
+      - uses: ./action-repo
         name: use composite action
         with:
           sonar-project-key: 'chill-viking-org_github-actions-tests-dotnet-sonar-scanner'
