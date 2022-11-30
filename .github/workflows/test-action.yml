@@ -21,7 +21,6 @@ jobs:
         name: Checkout chill-viking/github-actions-tests
         with:
           name: chill-viking/github-actions-tests
-          ref: refs/head/main
           path: './test-repo'
 
       - uses: ./../../
