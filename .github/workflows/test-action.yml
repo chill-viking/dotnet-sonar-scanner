@@ -8,10 +8,11 @@ on:
 
 jobs:
   test-dotnet-sonar-scanner:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+    #strategy:
+    #  matrix:
+    #    os: [ubuntu-latest, windows-latest, macos-latest]
+    #runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     name: use chill-viking/dotnet-sonar-scanner
     steps:
       - uses: actions/checkout@v3
