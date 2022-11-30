@@ -8,15 +8,25 @@ on:
 
 jobs:
   test-dotnet-sonar-scanner:
-    #strategy:
-    #  matrix:
-    #    os: [ubuntu-latest, windows-latest, macos-latest]
-    #runs-on: ${{ matrix.os }}
-    runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: $
     name: use chill-viking/dotnet-sonar-scanner
     steps:
       - uses: actions/checkout@v3
-        name: Checkout this repo to access action
+        name: Checkout chill-viking/github-actions-tests
         with:
-          path: './action-repo'
+          name: chill-viking/github-actions-tests
+          ref: refs/head/release
+
+      - uses: ../../
+        name: use composite action
+        with:
+          sonar-project-key: 'chill-viking-org_github-actions-tests-dotnet-sonar-scanner'
+          sonar-org-key: 'chill-viking-org'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.SONAR_TOKEN_DOTNET }}
+          project-version: '1.0.0-beta'
+          working-directory: './dotnet-sonar-scanner'
+          checkout: false
