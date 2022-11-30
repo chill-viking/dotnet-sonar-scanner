@@ -2,11 +2,16 @@
 
 [![HitCount](https://hits.dwyl.com/chill-viking/dotnet-sonar-scanner.svg?style=flat-square)](http://hits.dwyl.com/chill-viking/dotnet-sonar-scanner)
 <!-- TODO: add other status badges once workflows sorted out -->
+<hr/>
 
 GitHub Action to scan a dotnet project using sonar scanner.
 
-This action will check out your code and execute `dotnet build` and `dotnet test` in the root directory.
+<hr/>
+
+This action will check out your code (by default) and execute `dotnet build` and `dotnet test` in the root directory.
+
 This directory used can be changed by specifying the [input](#inputs) `working-directory`.
+
 The directory used should have a single solution `.sln` file containing the projects being tested and optionally test projects to run against the projects.
 
 ## Supported .NET Frameworks
