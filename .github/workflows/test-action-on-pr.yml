@@ -1,0 +1,23 @@
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches:
+      - main
+
+# used to trigger test action workflow so that not seen as pull request workflow
+# when performing a scan from pull request, sonar scanner tries to comment on PR for the repo of the project (which is not this one)
+name: Receive PR
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/
