@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v3
         name: Checkout chill-viking/github-actions-tests
         with:
-          name: chill-viking/github-actions-tests
+          repository: chill-viking/github-actions-tests
           path: './test-repo'
 
       - uses: ./action-repo
