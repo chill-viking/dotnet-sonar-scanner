@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/chill-viking/dotnet-sonar-scanner/compare/v1.0.0...v1.1.0) (2022-11-30)
+
+
+### Features
+
+* **action:** add `checkout` input for action ([108fdf9](https://github.com/chill-viking/dotnet-sonar-scanner/commit/108fdf9c7a4a03268916849db9e26ea20dfb709b))
+
 ## 1.0.0 (2022-11-29)
 
 
