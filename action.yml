@@ -28,6 +28,10 @@ inputs:
     description: 'Project version to use for scan'
     required: false
     default: ''
+  checkout:
+    description: 'Should action perform checkout of repo itself'
+    required: false
+    default: 'true'
 
 runs:
   using: 'composite'
@@ -44,6 +48,7 @@ runs:
         dotnet-version: ${{ inputs.dotnet-version }}
 
     - uses: actions/checkout@v3
+      if: inputs.checkout == 'true'
       with:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 

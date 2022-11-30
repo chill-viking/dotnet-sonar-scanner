@@ -70,6 +70,12 @@ jobs:
     runs-on: window-latest # can also run on windows-latest
     name: dotnet test coverage update
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      # preform additional steps with repo checked out
+
       - uses: chill-viking/dotnet-sonar-scanner@v1
         name: Scan and Publish
         with:
@@ -78,6 +84,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           sonar-token: ${{ secrets.SONAR_TOKEN }}
           working-directory: './src/dotnet-api'
+          checkout: false
 ```
 
 Follow the same steps as mentioned in [basic workflow](#example-basic-workflow-) and your workflow should be good to test analyze your project in `/src/dotnet-api`
@@ -86,12 +93,13 @@ You can review an example repo using this kind of workflow [here](https://github
 
 ## Inputs
 
-| Input               | Required | Description                                                                          |
-|:--------------------|:--------:|:-------------------------------------------------------------------------------------|
-| `sonar-project-key` |   Yes    | SonarCloud project key                                                               |
-| `sonar-org-key`     |   Yes    | SonarCloud organization key                                                          |
-| `token`             |   Yes    | GitHub token for the current workflow                                                |
-| `sonar-token`       |   Yes    | SonarCloud authentication token                                                      |
-| `working-directory` |    No    | Specify location of primary solution to build and test in repo<br/>**default:** `./` |
-| `dotnet-version`    |    No    | .NET SDK version to be used<br/>**default:** `6.0.x`                                 |
-| `project-version`   |    No    | Version of project being scanned, will be set in analysis<br/>**default:** `''`      |
+| Input               | Required | Description                                                                             |
+|:--------------------|:--------:|:----------------------------------------------------------------------------------------|
+| `sonar-project-key` |   Yes    | SonarCloud project key                                                                  |
+| `sonar-org-key`     |   Yes    | SonarCloud organization key                                                             |
+| `token`             |   Yes    | GitHub token for the current workflow                                                   |
+| `sonar-token`       |   Yes    | SonarCloud authentication token                                                         |
+| `working-directory` |    No    | Specify location of primary solution to build and test in repo<br/>**default:** `./`    |
+| `dotnet-version`    |    No    | .NET SDK version to be used<br/>**default:** `6.0.x`                                    |
+| `project-version`   |    No    | Version of project being scanned, will be set in analysis<br/>**default:** `''`         |
+| `checkout`          |    No    | Flag to inform action whether it should check out repo or not<br/>**default:** `true`   |
