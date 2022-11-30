@@ -1,0 +1,22 @@
+name: Test dotnet-sonar-scanner
+
+on:
+  workflow_run:
+    workflows: ["Receive PR"]
+    types:
+      - completed
+
+jobs:
+  test-dotnet-sonar-scanner:
+    #strategy:
+    #  matrix:
+    #    os: [ubuntu-latest, windows-latest, macos-latest]
+    #runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    name: use chill-viking/dotnet-sonar-scanner
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout this repo to access action
+        with:
+          path: './action-repo'
