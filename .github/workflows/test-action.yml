@@ -43,14 +43,16 @@ jobs:
         shell: pwsh
         run: |
           $json = Get-Content ./NR | ConvertFrom-Json
-          echo "::set-output name=pr::$(echo $json.pr)"
-          echo "::set-output name=ref::$(echo $json.ref)"
+          echo $json.pr
+          echo $json.ref
+          echo "pr=$json.pr" >> $GITHUB_OUTPUT
+          echo "ref=$json.ref" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v3
         name: Checkout this repo to access action
         with:
           path: './action-repo'
-          ref: steps.set_pr.outputs.ref
+          ref: ${{ steps.set_pr.outputs.ref }}
 
       - uses: actions/checkout@v3
         name: Checkout chill-viking/github-actions-tests
@@ -77,6 +79,6 @@ jobs:
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: ${{ steps.set-pr.outputs.result }},
+              issue_number: ${{ steps.set-pr.outputs.pr }},
               body: 'Testing action for ${{ matrix.os }} was successful!'
             });
