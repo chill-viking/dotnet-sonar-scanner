@@ -40,19 +40,17 @@ jobs:
 
       - name: 'Get PR Number'
         id: set-pr
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          result-encoding: string
-          script: |
-            var fs = require('fs');
-            return Number(fs.readFileSync('./NR'));
+        shell: pwsh
+        run: |
+          $json = Get-Content ./NR | ConvertFrom-Json
+          echo "::set-output name=pr::$(echo $json.pr)"
+          echo "::set-output name=ref::$(echo $json.ref)"
 
       - uses: actions/checkout@v3
         name: Checkout this repo to access action
         with:
           path: './action-repo'
-          ref: pull/${{ steps.set-pr.outputs.result }}/merge
+          ref: steps.set_pr.outputs.ref
 
       - uses: actions/checkout@v3
         name: Checkout chill-viking/github-actions-tests
