@@ -38,21 +38,18 @@ jobs:
 
       - run: unzip pr.zip
 
-      - name: 'Get PR Number'
-        id: set-pr
-        shell: pwsh
-        run: |
-          $json = Get-Content ./NR | ConvertFrom-Json
-          echo $json.pr
-          echo $json.ref
-          echo "pr=$json.pr" >> $GITHUB_OUTPUT
-          echo "ref=$json.ref" >> $GITHUB_OUTPUT
+      - name: 'Set PR Number'
+        id: set_pr
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'NR'
+          prefix: pr
 
       - uses: actions/checkout@v3
         name: Checkout this repo to access action
         with:
           path: './action-repo'
-          ref: ${{ steps.set_pr.outputs.ref }}
+          ref: ${{ env.pr_ref }}
 
       - uses: actions/checkout@v3
         name: Checkout chill-viking/github-actions-tests
@@ -79,6 +76,6 @@ jobs:
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: ${{ steps.set-pr.outputs.pr }},
+              issue_number: ${{ env.pr_pr }},
               body: 'Testing action for ${{ matrix.os }} was successful!'
             });
