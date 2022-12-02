@@ -16,7 +16,7 @@ jobs:
       - name: Save PR number
         run: |
           mkdir -p ./pr
-          echo '{ "pr": "${{ github.event.number }}", "ref": "${{ github.ref_name }}" }' > ./pr/NR
+          echo '{ "pr": "${{ github.event.number }}", "ref": "${{ github.head_ref }}" }' > ./pr/NR
 
       - uses: actions/upload-artifact@v3
         with:

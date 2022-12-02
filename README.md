@@ -1,6 +1,5 @@
 # dotnet-sonar-scanner
 
-[![HitCount](https://hits.dwyl.com/chill-viking/dotnet-sonar-scanner.svg?style=flat-square)](http://hits.dwyl.com/chill-viking/dotnet-sonar-scanner)
 <!-- TODO: add other status badges once workflows sorted out -->
 <hr/>
 
@@ -103,3 +102,8 @@ You can review an example repo using this kind of workflow [here](https://github
 | `dotnet-version`    |    No    | .NET SDK version to be used<br/>**default:** `6.0.x`                                    |
 | `project-version`   |    No    | Version of project being scanned, will be set in analysis<br/>**default:** `''`         |
 | `checkout`          |    No    | Flag to inform action whether it should check out repo or not<br/>**default:** `true`   |
+
+<hr/>
+
+Total views: [![HitCount](https://hits.dwyl.com/chill-viking/dotnet-sonar-scanner.svg?style=flat-square)](http://hits.dwyl.com/chill-viking/dotnet-sonar-scanner)
+
