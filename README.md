@@ -1,6 +1,8 @@
 # dotnet-sonar-scanner
 
 <!-- TODO: add other status badges once workflows sorted out -->
+![test pipelines](https://github.com/chill-viking/dotnet-sonar-scanner/actions/workflows/test-action.yml/badge.svg?branch=main)  
+![release badge](https://img.shields.io/github/v/release/chill-viking/dotnet-sonar-scanner?display_name=release&logo=github&sort=semver)
 <hr/>
 
 GitHub Action to scan a dotnet project using sonar scanner.
@@ -106,4 +108,3 @@ You can review an example repo using this kind of workflow [here](https://github
 <hr/>
 
 Total views: [![HitCount](https://hits.dwyl.com/chill-viking/dotnet-sonar-scanner.svg?style=flat-square)](http://hits.dwyl.com/chill-viking/dotnet-sonar-scanner)
-
