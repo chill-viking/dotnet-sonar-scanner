@@ -13,7 +13,6 @@ jobs:
         with:
           release-type: node
           package-name: dotnet-sonar-scanner
-          command: github-release
 
       - uses: actions/checkout@v3
       - name: tag major and minor versions
