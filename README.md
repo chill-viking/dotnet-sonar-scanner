@@ -13,7 +13,7 @@ GitHub Action to scan a dotnet project using sonar scanner.
 
 This action will check out your code (by default) and execute `dotnet build` and `dotnet test` in the root directory.
 
-This directory used can be changed by specifying the [input](#inputs) `working-directory`.
+The directory used can be changed by specifying the [input](#inputs) `working-directory`.
 
 The directory used should have a single solution `.sln` file containing the projects being tested and optionally test projects to run against the projects.
 
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     name: dotnet test coverage update
     steps:
-      - uses: chill-viking/dotnet-sonar-scanner@v1
+      - uses: chill-viking/dotnet-sonar-scanner@v2
         name: Scan and Publish
         with:
           sonar-project-key: '{sonar-project-key}'
@@ -79,7 +79,7 @@ jobs:
 
       # preform additional steps with repo checked out
 
-      - uses: chill-viking/dotnet-sonar-scanner@v1
+      - uses: chill-viking/dotnet-sonar-scanner@v2
         name: Scan and Publish
         with:
           sonar-project-key: '{sonar-project-key}'
