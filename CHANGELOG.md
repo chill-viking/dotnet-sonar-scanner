@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/chill-viking/dotnet-sonar-scanner/compare/v2.0.0...v2.0.1) (2022-12-21)
+
+
+### Bug Fixes
+
+* **workflow:** drop command parameter ([751205d](https://github.com/chill-viking/dotnet-sonar-scanner/commit/751205d844f19b1e0b1186fddb0ca8e869d3919a))
+* **workflow:** update workflow to tag releases ([001a06d](https://github.com/chill-viking/dotnet-sonar-scanner/commit/001a06dd307a413c63332b0b78ffe1ae687db230))
+
 ## [2.0.0](https://github.com/chill-viking/dotnet-sonar-scanner/compare/v1.0.0...v2.0.0) (2022-12-02)
 
 
