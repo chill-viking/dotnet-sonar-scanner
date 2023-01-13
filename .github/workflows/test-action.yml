@@ -1,19 +1,22 @@
-name: Test dotnet-sonar-scanner
-
 on:
   workflow_run:
     workflows: ["Receive PR"]
     types:
       - completed
+  push:
+    branches:
+      - main
+
+name: Test dotnet-sonar-scanner
 
 jobs:
-  test-dotnet-sonar-scanner:
+  test-dotnet-sonar-scanner-pr:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
-    name: use chill-viking/dotnet-sonar-scanner
+    name: Confirm PR
     steps:
       - name: 'Download PR from trigger workflow'
         uses: actions/github-script@v6
@@ -79,3 +82,33 @@ jobs:
               issue_number: ${{ env.pr_pr }},
               body: 'Testing action for ${{ matrix.os }} was successful!'
             });
+
+  test-dotnet-sonar-scanner-push:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    if: github.event_name == 'push'
+    name: Confirm Push
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout this repo to access action
+        with:
+          path: './action-repo'
+
+      - uses: actions/checkout@v3
+        name: Checkout chill-viking/github-actions-tests
+        with:
+          repository: chill-viking/github-actions-tests
+          path: './test-repo'
+
+      - uses: ./action-repo
+        name: use composite action
+        with:
+          sonar-project-key: 'chill-viking-org_github-actions-tests-dotnet-sonar-scanner'
+          sonar-org-key: 'chill-viking-org'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.ORG_SONAR_TOKEN }}
+          project-version: '1.0.0-beta'
+          working-directory: './test-repo/dotnet-sonar-scanner'
+          checkout: false
