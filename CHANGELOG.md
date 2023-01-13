@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/chill-viking/dotnet-sonar-scanner/compare/v2.0.1...v2.0.2) (2023-01-13)
+
+
+### Bug Fixes
+
+* **ci:** update test workflow to run on push ([e003626](https://github.com/chill-viking/dotnet-sonar-scanner/commit/e0036265b04adc86a91fa9c22f84622947cb0e94))
+
 ## [2.0.1](https://github.com/chill-viking/dotnet-sonar-scanner/compare/v2.0.0...v2.0.1) (2022-12-21)
 
 
