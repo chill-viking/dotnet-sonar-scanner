@@ -47,7 +47,7 @@ runs:
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       if: inputs.checkout == 'true'
       with:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis

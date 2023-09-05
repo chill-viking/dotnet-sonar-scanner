@@ -48,13 +48,13 @@ jobs:
           filename: 'NR'
           prefix: pr
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout this repo to access action
         with:
           path: './action-repo'
           ref: ${{ env.pr_ref }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout chill-viking/github-actions-tests
         with:
           repository: chill-viking/github-actions-tests
@@ -91,12 +91,12 @@ jobs:
     if: github.event_name == 'push'
     name: Confirm Push
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout this repo to access action
         with:
           path: './action-repo'
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout chill-viking/github-actions-tests
         with:
           repository: chill-viking/github-actions-tests
